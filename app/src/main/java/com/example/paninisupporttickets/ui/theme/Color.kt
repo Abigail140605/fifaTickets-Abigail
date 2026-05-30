@@ -2,13 +2,13 @@ package com.example.paninisupporttickets.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple80 = Color(0xFFD0BCFF)
-val PurpleGrey80 = Color(0xFFCCC2DC)
-val Pink80 = Color(0xFFEFB8C8)
+val PaniniBlue80 = Color(0xFF90CAF9)
+val PaniniBlueGrey80 = Color(0xFFB0BEC5)
+val PaniniRed80 = Color(0xFFEF9A9A)
 
-val Purple40 = Color(0xFF6650a4)
-val PurpleGrey40 = Color(0xFF625b71)
-val Pink40 = Color(0xFF7D5260)
+val PaniniBlue40 = Color(0xFF1976D2)
+val PaniniBlueGrey40 = Color(0xFF607D8B)
+val PaniniRed40 = Color(0xFFD32F2F)
 
 val PriorityCriticalContainer = Color(0xFFD32F2F)
 val PriorityHighContainer = Color(0xFFF57C00)
