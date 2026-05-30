@@ -1,0 +1,90 @@
+openapi: 3.0.3
+info:
+  title: Panini Support Tickets - Ticket Detail API
+  description: Contract for retrieving one support ticket.
+  version: 1.0.0
+
+servers:
+  - url: https://api.panini-support.local
+    description: Simulated development server
+
+paths:
+  /tickets/{ticketId}:
+    get:
+      summary: Get ticket detail
+      description: Returns the full detail for a support ticket.
+      parameters:
+        - name: ticketId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Ticket returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TicketResponse'
+        '404':
+          description: Ticket not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    TicketResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          example: ticket-001
+        title:
+          type: string
+          example: Missing packs in regional batch
+        description:
+          type: string
+          example: Store reports 120 missing packs compared with the confirmed GAM-03 route dispatch.
+        providerName:
+          type: string
+          example: Distribuidora La Sabana
+        category:
+          $ref: '#/components/schemas/TicketCategory'
+        priority:
+          $ref: '#/components/schemas/TicketPriority'
+        status:
+          $ref: '#/components/schemas/TicketStatus'
+        createdAt:
+          type: string
+          format: date-time
+          example: 2026-05-28T10:30:00Z
+        reportedBy:
+          type: string
+          example: Carlos Ramirez
+        location:
+          type: string
+          example: Point of Sale GAM-03
+
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Ticket not found
+        statusCode:
+          type: integer
+          example: 404
+
+    TicketPriority:
+      type: string
+      enum: [LOW, MEDIUM, HIGH, CRITICAL]
+
+    TicketStatus:
+      type: string
+      enum: [OPEN, IN_PROGRESS, RESOLVED, CLOSED]
+
+    TicketCategory:
+      type: string
+      enum: [INVENTORY, DISTRIBUTION, SUPPLIER, DAMAGED_PRODUCT, DELIVERY_DELAY, OTHER]
