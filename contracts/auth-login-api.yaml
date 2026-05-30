@@ -1,18 +1,18 @@
 openapi: 3.0.3
 info:
-  title: Panini Support Tickets - Authentication API
-  description: API para autenticación de usuarios del sistema de tickets
+  title: Panini Support Tickets - Login API
+  description: Contract for simulated user authentication.
   version: 1.0.0
 
 servers:
   - url: https://api.panini-support.local
-    description: Servidor de desarrollo (simulado)
+    description: Simulated development server
 
 paths:
   /auth/login:
     post:
-      summary: Autenticación de usuario
-      description: Valida credenciales y retorna token de sesión
+      summary: Login user
+      description: Validates credentials and returns a session token.
       requestBody:
         required: true
         content:
@@ -21,13 +21,13 @@ paths:
               $ref: '#/components/schemas/LoginRequest'
       responses:
         '200':
-          description: Login exitoso
+          description: Login successful
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/LoginResponse'
         '401':
-          description: Credenciales inválidas
+          description: Invalid credentials
           content:
             application/json:
               schema:
@@ -54,20 +54,20 @@ components:
       properties:
         token:
           type: string
-          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+          example: mock-session-token
         userId:
           type: string
           example: user-001
         userName:
           type: string
-          example: Admin Panini
+          example: Panini Operations Admin
 
     ErrorResponse:
       type: object
       properties:
         message:
           type: string
-          example: Credenciales inválidas
+          example: Invalid email or password
         statusCode:
           type: integer
           example: 401

@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
-  title: Panini Support Tickets - Ticket Detail API
-  description: Contract for retrieving one support ticket.
+  title: Panini Support Tickets - List Tickets API
+  description: Contract for retrieving support tickets.
   version: 1.0.0
 
 servers:
@@ -9,29 +9,19 @@ servers:
     description: Simulated development server
 
 paths:
-  /tickets/{ticketId}:
+  /tickets:
     get:
-      summary: Get ticket detail
-      description: Returns the full detail for a support ticket.
-      parameters:
-        - name: ticketId
-          in: path
-          required: true
-          schema:
-            type: string
+      summary: List tickets
+      description: Returns tickets ordered by business priority.
       responses:
         '200':
-          description: Ticket returned successfully
+          description: Tickets returned successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TicketResponse'
-        '404':
-          description: Ticket not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                type: array
+                items:
+                  $ref: '#/components/schemas/TicketResponse'
 
 components:
   schemas:
@@ -66,16 +56,6 @@ components:
         location:
           type: string
           example: Point of Sale GAM-03
-
-    ErrorResponse:
-      type: object
-      properties:
-        message:
-          type: string
-          example: Ticket not found
-        statusCode:
-          type: integer
-          example: 404
 
     TicketPriority:
       type: string

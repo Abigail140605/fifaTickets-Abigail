@@ -1,10 +1,15 @@
 package com.example.paninisupporttickets.data.repository
 
 import com.example.paninisupporttickets.data.Ticket
+import com.example.paninisupporttickets.data.TicketCategory
 import com.example.paninisupporttickets.data.TicketPriority
 import com.example.paninisupporttickets.data.TicketStatus
 import com.example.paninisupporttickets.data.mock.MockTickets
 import com.example.paninisupporttickets.data.remote.ApiService
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+import java.util.TimeZone
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -25,8 +30,8 @@ class TicketRepository(private val apiService: ApiService) {
         title: String,
         description: String,
         providerName: String,
-        category: String,
-        priority: String,
+        category: TicketCategory,
+        priority: TicketPriority,
         reportedBy: String,
         location: String
     ): ApiResult<Ticket> {
@@ -36,10 +41,10 @@ class TicketRepository(private val apiService: ApiService) {
                 title = title,
                 description = description,
                 providerName = providerName,
-                category = com.example.paninisupporttickets.data.TicketCategory.valueOf(category),
-                priority = TicketPriority.valueOf(priority),
+                category = category,
+                priority = priority,
                 status = TicketStatus.OPEN,
-                createdAt = java.time.Instant.now().toString(),
+                createdAt = currentUtcTimestamp(),
                 reportedBy = reportedBy,
                 location = location
             )
@@ -100,5 +105,11 @@ class TicketRepository(private val apiService: ApiService) {
             TicketPriority.LOW to 3
         )
         return tickets.sortedBy { priorityOrder[it.priority] ?: 99 }
+    }
+
+    private fun currentUtcTimestamp(): String {
+        val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US)
+        formatter.timeZone = TimeZone.getTimeZone("UTC")
+        return formatter.format(Date())
     }
 }

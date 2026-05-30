@@ -1,5 +1,6 @@
 package com.example.paninisupporttickets.data.remote
 
+import com.example.paninisupporttickets.core.AppConstants
 import com.example.paninisupporttickets.data.remote.model.CreateTicketRequestDto
 import com.example.paninisupporttickets.data.remote.model.CreateTicketResponseDto
 import com.example.paninisupporttickets.data.remote.model.LoginRequestDto
@@ -14,25 +15,25 @@ import retrofit2.http.POST
 import retrofit2.http.Path
 
 interface ApiService {
-    @POST("auth/login")
+    @POST(AppConstants.Api.Paths.AUTH_LOGIN)
     suspend fun login(@Body request: LoginRequestDto): LoginResponseDto
 
-    @GET("tickets")
+    @GET(AppConstants.Api.Paths.TICKETS)
     suspend fun getTickets(): List<TicketResponseDto>
 
-    @GET("tickets/{ticketId}")
+    @GET(AppConstants.Api.Paths.TICKET_DETAIL)
     suspend fun getTicket(@Path("ticketId") ticketId: String): TicketResponseDto
 
-    @POST("tickets")
+    @POST(AppConstants.Api.Paths.TICKETS)
     suspend fun createTicket(@Body request: CreateTicketRequestDto): CreateTicketResponseDto
 
-    @PATCH("tickets/{ticketId}/status")
+    @PATCH(AppConstants.Api.Paths.TICKET_STATUS)
     suspend fun updateTicketStatus(
         @Path("ticketId") ticketId: String,
         @Body request: UpdateTicketStatusRequestDto
     ): TicketResponseDto
 
-    @PATCH("tickets/{ticketId}/priority")
+    @PATCH(AppConstants.Api.Paths.TICKET_PRIORITY)
     suspend fun updateTicketPriority(
         @Path("ticketId") ticketId: String,
         @Body request: UpdateTicketPriorityRequestDto

@@ -1,18 +1,18 @@
 openapi: 3.0.3
 info:
-  title: Panini Support Tickets - Ticket Status Update API
-  description: API para actualizar el estado de un ticket
+  title: Panini Support Tickets - Update Ticket Status API
+  description: Contract for changing a ticket status.
   version: 1.0.0
 
 servers:
   - url: https://api.panini-support.local
-    description: Servidor de desarrollo (simulado)
+    description: Simulated development server
 
 paths:
   /tickets/{ticketId}/status:
     patch:
-      summary: Actualizar estado de ticket
-      description: Cambia el estado de un ticket existente
+      summary: Update ticket status
+      description: Changes the workflow status of an existing ticket.
       parameters:
         - name: ticketId
           in: path
@@ -27,13 +27,13 @@ paths:
               $ref: '#/components/schemas/UpdateTicketStatusRequest'
       responses:
         '200':
-          description: Estado actualizado
+          description: Status updated successfully
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/TicketResponse'
         '404':
-          description: Ticket no encontrado
+          description: Ticket not found
           content:
             application/json:
               schema:
@@ -57,10 +57,10 @@ components:
           example: ticket-001
         title:
           type: string
-          example: Faltante de paquetes en lote regional
+          example: Missing packs in regional batch
         description:
           type: string
-          example: El punto de venta reporta 120 paquetes menos respecto al despacho confirmado para la ruta GAM-03.
+          example: Store reports 120 missing packs compared with the confirmed GAM-03 route dispatch.
         providerName:
           type: string
           example: Distribuidora La Sabana
@@ -76,46 +76,29 @@ components:
           example: 2026-05-28T10:30:00Z
         reportedBy:
           type: string
-          example: Carlos Ramírez
+          example: Carlos Ramirez
         location:
           type: string
-          example: Punto de Venta GAM-03
+          example: Point of Sale GAM-03
 
     ErrorResponse:
       type: object
       properties:
         message:
           type: string
-          example: Ticket no encontrado
+          example: Ticket not found
         statusCode:
           type: integer
           example: 404
 
     TicketPriority:
       type: string
-      enum:
-        - LOW
-        - MEDIUM
-        - HIGH
-        - CRITICAL
-      example: HIGH
+      enum: [LOW, MEDIUM, HIGH, CRITICAL]
 
     TicketStatus:
       type: string
-      enum:
-        - OPEN
-        - IN_PROGRESS
-        - RESOLVED
-        - CLOSED
-      example: OPEN
+      enum: [OPEN, IN_PROGRESS, RESOLVED, CLOSED]
 
     TicketCategory:
       type: string
-      enum:
-        - INVENTORY
-        - DISTRIBUTION
-        - SUPPLIER
-        - DAMAGED_PRODUCT
-        - DELIVERY_DELAY
-        - OTHER
-      example: INVENTORY
+      enum: [INVENTORY, DISTRIBUTION, SUPPLIER, DAMAGED_PRODUCT, DELIVERY_DELAY, OTHER]

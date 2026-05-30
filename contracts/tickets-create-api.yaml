@@ -1,0 +1,95 @@
+openapi: 3.0.3
+info:
+  title: Panini Support Tickets - Create Ticket API
+  description: Contract for creating support tickets.
+  version: 1.0.0
+
+servers:
+  - url: https://api.panini-support.local
+    description: Simulated development server
+
+paths:
+  /tickets:
+    post:
+      summary: Create ticket
+      description: Creates a support ticket related to suppliers, inventory, distribution, or logistics.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTicketRequest'
+      responses:
+        '201':
+          description: Ticket created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateTicketResponse'
+        '400':
+          description: Invalid ticket payload
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    CreateTicketRequest:
+      type: object
+      required:
+        - title
+        - description
+        - providerName
+        - category
+        - priority
+        - reportedBy
+        - location
+      properties:
+        title:
+          type: string
+          example: Delayed delivery to Sarapiqui stores
+        description:
+          type: string
+          example: The scheduled morning route did not arrive at three registered stores.
+        providerName:
+          type: string
+          example: Logistica Caribe Norte
+        category:
+          $ref: '#/components/schemas/TicketCategory'
+        priority:
+          $ref: '#/components/schemas/TicketPriority'
+        reportedBy:
+          type: string
+          example: Maria Gonzalez
+        location:
+          type: string
+          example: Sarapiqui
+
+    CreateTicketResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          example: ticket-009
+        message:
+          type: string
+          example: Ticket created successfully
+
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Title is required
+        statusCode:
+          type: integer
+          example: 400
+
+    TicketPriority:
+      type: string
+      enum: [LOW, MEDIUM, HIGH, CRITICAL]
+
+    TicketCategory:
+      type: string
+      enum: [INVENTORY, DISTRIBUTION, SUPPLIER, DAMAGED_PRODUCT, DELIVERY_DELAY, OTHER]
