@@ -26,7 +26,7 @@ data class CreateTicketUiState(
     val isLoading: Boolean = false,
     val errorMessage: String? = null,
     val isCreated: Boolean = false,
-    val canCreateTicket: Boolean = FeatureFlags.ENABLE_TICKET_CREATION
+    val canCreateTicket: Boolean = true
 )
 
 class CreateTicketViewModel(
@@ -34,6 +34,18 @@ class CreateTicketViewModel(
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(CreateTicketUiState())
     val uiState: StateFlow<CreateTicketUiState> = _uiState.asStateFlow()
+
+    init {
+        observeFeatureFlags()
+    }
+
+    private fun observeFeatureFlags() {
+        viewModelScope.launch {
+            FeatureFlags.enableTicketCreation.collect { enabled ->
+                _uiState.value = _uiState.value.copy(canCreateTicket = enabled)
+            }
+        }
+    }
 
     fun updateTitle(value: String) = updateState { copy(title = value, errorMessage = null) }
     fun updateDescription(value: String) = updateState { copy(description = value, errorMessage = null) }

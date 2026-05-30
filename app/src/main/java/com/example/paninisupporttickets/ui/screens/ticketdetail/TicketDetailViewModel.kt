@@ -21,7 +21,7 @@ data class TicketDetailUiState(
     val isUpdating: Boolean = false,
     val ticket: Ticket? = null,
     val errorMessage: String? = null,
-    val canUpdatePriority: Boolean = FeatureFlags.ENABLE_PRIORITY_UPDATE
+    val canUpdatePriority: Boolean = true
 )
 
 class TicketDetailViewModel(
@@ -33,6 +33,15 @@ class TicketDetailViewModel(
 
     init {
         observeTicket()
+        observeFeatureFlags()
+    }
+
+    private fun observeFeatureFlags() {
+        viewModelScope.launch {
+            FeatureFlags.enablePriorityUpdate.collect { enabled ->
+                _uiState.value = _uiState.value.copy(canUpdatePriority = enabled)
+            }
+        }
     }
 
     private fun observeTicket() {
@@ -61,7 +70,7 @@ class TicketDetailViewModel(
     }
 
     fun updatePriority(priority: TicketPriority) {
-        if (!FeatureFlags.ENABLE_PRIORITY_UPDATE) return
+        if (!_uiState.value.canUpdatePriority) return
 
         viewModelScope.launch {
             _uiState.value = _uiState.value.copy(isUpdating = true, errorMessage = null)
