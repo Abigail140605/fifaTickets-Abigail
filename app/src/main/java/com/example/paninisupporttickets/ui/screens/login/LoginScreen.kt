@@ -23,6 +23,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.paninisupporttickets.core.UserMessages
 
 @Composable
 fun LoginScreen(
@@ -46,14 +47,14 @@ fun LoginScreen(
         verticalArrangement = Arrangement.Center
     ) {
         Text(
-            text = "Panini Support Tickets",
+            text = UserMessages.Login.TITLE,
             style = MaterialTheme.typography.headlineMedium
         )
 
         Spacer(modifier = Modifier.height(8.dp))
 
         Text(
-            text = "Copa Mundial FIFA 2026",
+            text = UserMessages.Login.SUBTITLE,
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
@@ -63,7 +64,7 @@ fun LoginScreen(
         OutlinedTextField(
             value = uiState.email,
             onValueChange = viewModel::updateEmail,
-            label = { Text("Correo electrónico") },
+            label = { Text(UserMessages.Login.EMAIL_LABEL) },
             singleLine = true,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
             modifier = Modifier.fillMaxWidth(),
@@ -75,7 +76,7 @@ fun LoginScreen(
         OutlinedTextField(
             value = uiState.password,
             onValueChange = viewModel::updatePassword,
-            label = { Text("Contraseña") },
+            label = { Text(UserMessages.Login.PASSWORD_LABEL) },
             singleLine = true,
             visualTransformation = PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
@@ -105,7 +106,7 @@ fun LoginScreen(
                     color = MaterialTheme.colorScheme.onPrimary
                 )
             } else {
-                Text("Iniciar sesión")
+                Text(UserMessages.Login.LOGIN_BUTTON)
             }
         }
     }

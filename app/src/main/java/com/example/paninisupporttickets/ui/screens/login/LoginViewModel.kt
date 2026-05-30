@@ -2,6 +2,7 @@ package com.example.paninisupporttickets.ui.screens.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.paninisupporttickets.core.UserMessages
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -32,17 +33,17 @@ class LoginViewModel : ViewModel() {
         val password = currentState.password
 
         if (email.isEmpty()) {
-            _uiState.value = currentState.copy(errorMessage = "El correo es obligatorio")
+            _uiState.value = currentState.copy(errorMessage = UserMessages.Login.EMAIL_REQUIRED)
             return
         }
 
         if (!email.contains("@")) {
-            _uiState.value = currentState.copy(errorMessage = "El formato del correo no es válido")
+            _uiState.value = currentState.copy(errorMessage = UserMessages.Login.EMAIL_INVALID)
             return
         }
 
         if (password.isEmpty()) {
-            _uiState.value = currentState.copy(errorMessage = "La contraseña es obligatoria")
+            _uiState.value = currentState.copy(errorMessage = UserMessages.Login.PASSWORD_REQUIRED)
             return
         }
 

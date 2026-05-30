@@ -7,7 +7,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.paninisupporttickets.core.UserMessages
 import com.example.paninisupporttickets.ui.screens.login.LoginScreen
+import com.example.paninisupporttickets.ui.screens.ticketlist.TicketListScreen
 
 @Composable
 fun AppNavHost(
@@ -28,7 +30,14 @@ fun AppNavHost(
         }
 
         composable(route = AppDestinations.TICKETS) {
-            androidx.compose.material3.Text("Ticket List - Próximamente")
+            TicketListScreen(
+                onTicketClick = { ticketId ->
+                    navController.navigate(AppDestinations.ticketDetailRoute(ticketId))
+                },
+                onCreateTicketClick = {
+                    navController.navigate(AppDestinations.CREATE_TICKET)
+                }
+            )
         }
 
         composable(
@@ -36,11 +45,11 @@ fun AppNavHost(
             arguments = listOf(navArgument("ticketId") { type = NavType.StringType })
         ) { backStackEntry ->
             val ticketId = backStackEntry.arguments?.getString("ticketId") ?: ""
-            androidx.compose.material3.Text("Ticket Detail: $ticketId - Próximamente")
+            androidx.compose.material3.Text("Ticket Detail: $ticketId${UserMessages.Placeholder.TICKET_DETAIL_SUFFIX}")
         }
 
         composable(route = AppDestinations.CREATE_TICKET) {
-            androidx.compose.material3.Text("Create Ticket - Próximamente")
+            androidx.compose.material3.Text(UserMessages.Placeholder.CREATE_TICKET)
         }
     }
 }
