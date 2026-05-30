@@ -21,6 +21,24 @@ object UserMessages {
         const val LOAD_ERROR = "Error al cargar tickets"
     }
 
+    object TicketDetail {
+        const val TITLE = "Detalle del Ticket"
+        const val BACK = "Volver"
+        const val DESCRIPTION = "Descripcion"
+        const val PROVIDER = "Proveedor"
+        const val CATEGORY = "Categoria"
+        const val CREATED_AT = "Fecha de creacion"
+        const val REPORTED_BY = "Reportado por"
+        const val LOCATION = "Ubicacion"
+        const val STATUS = "Estado"
+        const val PRIORITY = "Prioridad"
+        const val UPDATE_STATUS = "Actualizar estado"
+        const val UPDATE_PRIORITY = "Actualizar prioridad"
+        const val PRIORITY_DISABLED = "La actualizacion de prioridad esta deshabilitada para pruebas internas"
+        const val NOT_FOUND = "Ticket no encontrado"
+        const val LOAD_ERROR = "Error al cargar detalle del ticket"
+    }
+
     object TicketPriorityText {
         const val CRITICAL = "Critica"
         const val HIGH = "Alta"
@@ -37,6 +55,5 @@ object UserMessages {
 
     object Placeholder {
         const val CREATE_TICKET = "Crear Ticket - Proximamente"
-        const val TICKET_DETAIL_SUFFIX = " - Proximamente"
     }
 }

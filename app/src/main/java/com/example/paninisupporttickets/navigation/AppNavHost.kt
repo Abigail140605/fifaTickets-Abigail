@@ -9,6 +9,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.paninisupporttickets.core.UserMessages
 import com.example.paninisupporttickets.ui.screens.login.LoginScreen
+import com.example.paninisupporttickets.ui.screens.ticketdetail.TicketDetailScreen
 import com.example.paninisupporttickets.ui.screens.ticketlist.TicketListScreen
 
 @Composable
@@ -45,7 +46,10 @@ fun AppNavHost(
             arguments = listOf(navArgument("ticketId") { type = NavType.StringType })
         ) { backStackEntry ->
             val ticketId = backStackEntry.arguments?.getString("ticketId") ?: ""
-            androidx.compose.material3.Text("Ticket Detail: $ticketId${UserMessages.Placeholder.TICKET_DETAIL_SUFFIX}")
+            TicketDetailScreen(
+                ticketId = ticketId,
+                onBackClick = { navController.popBackStack() }
+            )
         }
 
         composable(route = AppDestinations.CREATE_TICKET) {

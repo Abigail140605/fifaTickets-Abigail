@@ -3,14 +3,12 @@ package com.example.paninisupporttickets.ui.screens.ticketlist
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.paninisupporttickets.core.UserMessages
 import com.example.paninisupporttickets.data.AppContainer
 import com.example.paninisupporttickets.data.Ticket
 import com.example.paninisupporttickets.data.repository.TicketRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 
 data class TicketListUiState(
@@ -31,20 +29,13 @@ class TicketListViewModel(
 
     private fun observeTickets() {
         viewModelScope.launch {
-            ticketRepository.ticketsFlow
-                .catch { e ->
-                    _uiState.value = _uiState.value.copy(
-                        isLoading = false,
-                        errorMessage = e.message ?: UserMessages.TicketList.LOAD_ERROR
-                    )
-                }
-                .collect { tickets ->
-                    _uiState.value = _uiState.value.copy(
-                        isLoading = false,
-                        tickets = tickets,
-                        errorMessage = null
-                    )
-                }
+            ticketRepository.ticketsFlow.collect { tickets ->
+                _uiState.value = _uiState.value.copy(
+                    isLoading = false,
+                    tickets = tickets,
+                    errorMessage = null
+                )
+            }
         }
     }
 
