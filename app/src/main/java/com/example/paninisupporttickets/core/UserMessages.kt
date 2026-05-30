@@ -39,6 +39,22 @@ object UserMessages {
         const val LOAD_ERROR = "Error al cargar detalle del ticket"
     }
 
+    object CreateTicket {
+        const val TITLE = "Crear Ticket"
+        const val BACK = "Volver"
+        const val TITLE_LABEL = "Titulo"
+        const val DESCRIPTION_LABEL = "Descripcion"
+        const val PROVIDER_LABEL = "Proveedor"
+        const val REPORTED_BY_LABEL = "Reportado por"
+        const val LOCATION_LABEL = "Ubicacion"
+        const val CATEGORY_LABEL = "Categoria"
+        const val PRIORITY_LABEL = "Prioridad"
+        const val SUBMIT = "Crear ticket"
+        const val CREATION_DISABLED = "La creacion de tickets esta deshabilitada para pruebas internas"
+        const val REQUIRED_FIELDS = "Completa todos los campos obligatorios"
+        const val CREATE_ERROR = "No se pudo crear el ticket"
+    }
+
     object TicketPriorityText {
         const val CRITICAL = "Critica"
         const val HIGH = "Alta"
@@ -53,7 +69,15 @@ object UserMessages {
         const val CLOSED = "Cerrado"
     }
 
+    object TicketCategoryText {
+        const val INVENTORY = "Inventario"
+        const val DISTRIBUTION = "Distribucion"
+        const val SUPPLIER = "Proveedor"
+        const val DAMAGED_PRODUCT = "Producto danado"
+        const val DELIVERY_DELAY = "Retraso entrega"
+        const val OTHER = "Otro"
+    }
+
     object Placeholder {
-        const val CREATE_TICKET = "Crear Ticket - Proximamente"
     }
 }

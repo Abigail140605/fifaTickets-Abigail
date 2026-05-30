@@ -7,7 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.paninisupporttickets.core.UserMessages
+import com.example.paninisupporttickets.ui.screens.createticket.CreateTicketScreen
 import com.example.paninisupporttickets.ui.screens.login.LoginScreen
 import com.example.paninisupporttickets.ui.screens.ticketdetail.TicketDetailScreen
 import com.example.paninisupporttickets.ui.screens.ticketlist.TicketListScreen
@@ -53,7 +53,10 @@ fun AppNavHost(
         }
 
         composable(route = AppDestinations.CREATE_TICKET) {
-            androidx.compose.material3.Text(UserMessages.Placeholder.CREATE_TICKET)
+            CreateTicketScreen(
+                onBackClick = { navController.popBackStack() },
+                onTicketCreated = { navController.popBackStack() }
+            )
         }
     }
 }
