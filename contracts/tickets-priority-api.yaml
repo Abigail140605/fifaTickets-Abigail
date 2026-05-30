@@ -1,0 +1,121 @@
+openapi: 3.0.3
+info:
+  title: Panini Support Tickets - Ticket Priority Update API
+  description: API para actualizar la prioridad de un ticket
+  version: 1.0.0
+
+servers:
+  - url: https://api.panini-support.local
+    description: Servidor de desarrollo (simulado)
+
+paths:
+  /tickets/{ticketId}/priority:
+    patch:
+      summary: Actualizar prioridad de ticket
+      description: Cambia la prioridad de un ticket existente
+      parameters:
+        - name: ticketId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTicketPriorityRequest'
+      responses:
+        '200':
+          description: Prioridad actualizada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TicketResponse'
+        '404':
+          description: Ticket no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    UpdateTicketPriorityRequest:
+      type: object
+      required:
+        - priority
+      properties:
+        priority:
+          $ref: '#/components/schemas/TicketPriority'
+
+    TicketResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          example: ticket-001
+        title:
+          type: string
+          example: Faltante de paquetes en lote regional
+        description:
+          type: string
+          example: El punto de venta reporta 120 paquetes menos respecto al despacho confirmado para la ruta GAM-03.
+        providerName:
+          type: string
+          example: Distribuidora La Sabana
+        category:
+          $ref: '#/components/schemas/TicketCategory'
+        priority:
+          $ref: '#/components/schemas/TicketPriority'
+        status:
+          $ref: '#/components/schemas/TicketStatus'
+        createdAt:
+          type: string
+          format: date-time
+          example: 2026-05-28T10:30:00Z
+        reportedBy:
+          type: string
+          example: Carlos Ramírez
+        location:
+          type: string
+          example: Punto de Venta GAM-03
+
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Ticket no encontrado
+        statusCode:
+          type: integer
+          example: 404
+
+    TicketPriority:
+      type: string
+      enum:
+        - LOW
+        - MEDIUM
+        - HIGH
+        - CRITICAL
+      example: HIGH
+
+    TicketStatus:
+      type: string
+      enum:
+        - OPEN
+        - IN_PROGRESS
+        - RESOLVED
+        - CLOSED
+      example: OPEN
+
+    TicketCategory:
+      type: string
+      enum:
+        - INVENTORY
+        - DISTRIBUTION
+        - SUPPLIER
+        - DAMAGED_PRODUCT
+        - DELIVERY_DELAY
+        - OTHER
+      example: INVENTORY
